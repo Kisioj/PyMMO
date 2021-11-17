@@ -1,0 +1,6 @@
+venv/*
+dist/*
+pymmo.egg-info/*
+.idea/*
+.pyc
+*~

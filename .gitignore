@@ -3,4 +3,6 @@ dist/*
 pymmo.egg-info/*
 .idea/*
 .pyc
+__pycache__
+tmp/*
 *~

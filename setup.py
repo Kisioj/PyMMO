@@ -43,5 +43,16 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
 
-    packages=['pymmo'],
+    entry_points={
+      'console_scripts': [
+          'pymmo-admin=pymmo.core.management:run_command'
+      ]
+    },
+
+    packages=[
+        'pymmo',
+        'pymmo.core',
+        'pymmo.core.management',
+        'pymmo.core.management.commands',
+    ],
 )

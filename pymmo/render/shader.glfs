@@ -1,0 +1,11 @@
+#version 330  // if shader doesnt have version defined, it assumes 110 which doesnt allow uniform initialization
+
+uniform vec4 TextureColor;
+uniform sampler2D TextureUnit;
+
+in vec2 FragTexCoord;
+// out vec4 gl_FragColor; // redeclared error... why? shouldn't be available in GLES 300
+
+void main() {
+    gl_FragColor = texture(TextureUnit, FragTexCoord) * TextureColor;
+}

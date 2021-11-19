@@ -1,0 +1,8 @@
+- OpenGL renderer
+- client / server architecture
+
+
+- clicking on sprites:
+    - https://stackoverflow.com/questions/37494364/simple-way-to-determine-what-object-a-mouse-is-pointed-over-opengl-freeglut
+    - http://www.opengl-tutorial.org/miscellaneous/clicking-on-objects/picking-with-an-opengl-hack/
+    - http://www.opengl-tutorial.org/miscellaneous/clicking-on-objects/

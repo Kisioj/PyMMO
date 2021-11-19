@@ -1,0 +1,24 @@
+# version 330
+in vec2 FragTexCoord;
+out vec4 glFragColor;
+
+uniform sampler2D TextureUnit;
+uniform ivec3 iPickColor;
+uniform int iPickMode;
+
+void main()
+{
+    if(iPickMode == 0){
+
+        glFragColor = texture(TextureUnit, FragTexCoord);
+        //glFragColor = vec4(0.5, 0.0, 0.0, 1.0);
+    }else{
+        vec4 tmpColor = texture(TextureUnit, FragTexCoord);
+        //if (tmpColor.a <= 0.0) discard;
+        float alpha = 1.0;
+        if (tmpColor.a <= 0.0) {
+            alpha = 0.0;
+        }
+        glFragColor = vec4(iPickColor.r/255.0, iPickColor.g/255.0, iPickColor.b/255.0, alpha);
+    }
+}

@@ -32,9 +32,9 @@ from OpenGL.GL import (glBegin, glEnd, glEnable, glColor3f, glClearColor, glVert
 from OpenGL.GLU import gluPerspective, gluLookAt
 from OpenGL.arrays import vbo
 
-from PyBYOND import constants
-from PyBYOND.base_types.icon import IconDescriptor
-from PyBYOND import singletons as si
+from pymmo import constants
+from pymmo.base_types.icon import IconDescriptor
+from pymmo import singletons as si
 
 DIR_TO_DIR_INDEX_MAP = {
     constants.SOUTH: constants.SOUTH_INDEX,
@@ -103,7 +103,7 @@ class Atom(metaclass=MappableMeta):
 
     @property
     def loc(self):
-        from PyBYOND import base_types  # FIXME circular import
+        from pymmo import base_types  # FIXME circular import
         return base_types.Location(self.x, self.y, self.z)
 
     def draw(self):

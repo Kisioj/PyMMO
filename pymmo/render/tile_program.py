@@ -27,7 +27,7 @@ from OpenGL.arrays import vbo
 
 from glm import mat4, value_ptr, ortho, orthoLH, translate, vec3, vec4
 
-from PyBYOND.render.shader_program import ShaderProgram
+from pymmo.render.shader_program import ShaderProgram
 
 
 class TileProgram(ShaderProgram):
@@ -54,7 +54,7 @@ class TileProgram(ShaderProgram):
 
         glLinkProgram(self.id)
         if glGetProgramiv(self.id, GL_LINK_STATUS) != GL_TRUE:
-            print("Unable to link program:")
+            print("4Unable to link program:")
             self.print_program_log(self.id)
             glDeleteShader(vertex_shader_id)
             glDeleteShader(fragment_shader_id)

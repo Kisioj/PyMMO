@@ -10,7 +10,7 @@ import sys
 import time
 
 from PySide6 import QtCore, QtGui, QtWidgets
-from PySide6.QtCore import QEvent
+from PySide6.QtCore import QEvent, Qt
 from PySide6.QtGui import QTextCursor, QIcon, QAction
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWidgets import QApplication, QMainWindow, QMenu
@@ -125,6 +125,7 @@ class Ui_MainWindow(object):
         self.button_browser.setCheckable(True)
         self.button_browser.setText("Browser")
         self.button_browser.setAutoExclusive(True)
+        # self.button_browser.setFocusPolicy(Qt.NoFocus)
 
         def button_browser_on_select():
             self.browser.show()
@@ -295,13 +296,13 @@ class Ui_MainWindow(object):
         self.status_bar.showMessage("---")
         MainWindow.setStatusBar(self.status_bar)
 
-        MainWindow.setWindowTitle("PyBYOND")
+        MainWindow.setWindowTitle("pymmo")
         self.button_chat.setText("Chat")
         self.button_alt.setText("Alt")
         self.button_host.setText("Host...")
 
 
-if __name__ == '__main__':
+def run_app():
     app = QApplication(sys.argv)
     MainWindow = QMainWindow()
     ui.widgets = Ui_MainWindow()
@@ -309,3 +310,6 @@ if __name__ == '__main__':
     MainWindow.show()
     # scene = Scene()
     sys.exit(app.exec())
+
+if __name__ == '__main__':
+    run_app()

@@ -25,7 +25,7 @@ from OpenGL.GL import (glBegin, glEnd, glEnable, glColor3f, glClearColor, glVert
 from OpenGL.GLU import gluPerspective, gluLookAt
 from OpenGL.arrays import vbo
 
-from PyBYOND.render.texture import Texture
+from pymmo.render.texture import Texture
 import numpy as np
 
 class SpriteSheet(Texture):

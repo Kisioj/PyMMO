@@ -1,7 +1,6 @@
 import logging
-import pygame
 
-from PyBYOND import (
+from pymmo import (
     api,
     constants,
     singletons as si,
@@ -28,10 +27,12 @@ class Client(object):
         pass
 
     def play(self, filename):
-        if filename not in sounds:
-            sounds[filename] = pygame.mixer.Sound(filename)
-        sounds[filename].play()
-        logging.info(filename, 'plays')
+        return
+        #
+        # if filename not in sounds:
+        #     sounds[filename] = pygame.mixer.Sound(filename)
+        # sounds[filename].play()
+        # logging.info(filename, 'plays')
 
     def __north__(self):
         self.mob.Move(loc=api.get_step(self.mob, constants.NORTH), direction=constants.NORTH)

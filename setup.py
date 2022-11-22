@@ -51,6 +51,15 @@ setuptools.setup(
 
     packages=[
         'pymmo',
+
+        'pymmo.base_types',
+        'pymmo.base_types.mappable',
+        'pymmo.base_types.mappable.movable',
+
+        'pymmo.interface',
+
+        'pymmo.render',
+
         'pymmo.core',
         'pymmo.core.management',
         'pymmo.core.management.commands',

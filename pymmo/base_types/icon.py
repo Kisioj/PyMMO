@@ -2,10 +2,8 @@ import logging
 from collections import OrderedDict
 from PIL import Image
 
-import pygame
-
 from .icon_state import IconState
-from PyBYOND import singletons as si
+from pymmo import singletons as si
 import numpy as np
 
 from OpenGL.GL import (glBegin, glEnd, glEnable, glColor3f, glClearColor, glVertex3f, glClear, glTranslatef, glMatrixMode,
@@ -71,21 +69,21 @@ class Icon(SpriteSheet):
         self.initialized = True
         self.load_from_self_pixels()
 
-    def scale(self, width, height):
-        return
-        """
-        Scales tile size to width x height
-        """
-        # self.image = pygame.transform.scale(self.image, (width, height))
-        # im.thumbnail Image.NEAREST
-
-        for name, icon_state in self.icon_states.items():
-            for i, frames in enumerate(icon_state.frames):
-                icon_state.frames[i] = [
-                    pygame.transform.scale(frame, (width, height))
-                    for frame in frames
-                ]
-        logging.info('scale', width, height)
+    # def scale(self, width, height):
+    #     return
+    #     """
+    #     Scales tile size to width x height
+    #     """
+    #     # self.image = pygame.transform.scale(self.image, (width, height))
+    #     # im.thumbnail Image.NEAREST
+    #
+    #     for name, icon_state in self.icon_states.items():
+    #         for i, frames in enumerate(icon_state.frames):
+    #             icon_state.frames[i] = [
+    #                 pygame.transform.scale(frame, (width, height))
+    #                 for frame in frames
+    #             ]
+    #     logging.info('scale', width, height)
 
     def load_metadata(self, filepath):
         image = Image.open(filepath)

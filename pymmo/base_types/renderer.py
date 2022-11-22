@@ -10,8 +10,8 @@ from OpenGL.GL import GL_ELEMENT_ARRAY_BUFFER, glBindTexture, GL_TEXTURE_2D, glE
 import numpy as np
 from glm import mat4, translate, vec3, ortho
 
-import PyBYOND.singletons as si
-from PyBYOND.base_types.shader_program import WaterShaderProgram, PickProgram
+import pymmo.singletons as si
+from pymmo.base_types.shader_program import WaterShaderProgram, PickProgram
 
 
 class Renderer:

@@ -1,10 +1,10 @@
-from PyBYOND import singletons as si
+from pymmo import singletons as si
 
 
 class Location:
     def __init__(self, x, y, z=1):
-        from PyBYOND.base_types.mappable.turf import Turf  # FIXME, tutaj przez circual import
-        from PyBYOND.base_types.mappable.area import Area
+        from pymmo.base_types.mappable.turf import Turf  # FIXME, tutaj przez circual import
+        from pymmo.base_types.mappable.area import Area
         self.x, self.y, self.z = x, y, z
         self.cell = si.world.map.fields[y][x]
         self.turfs = []
@@ -18,7 +18,7 @@ class Location:
                 self.areas_classes.append(atom.__class__)
 
     def __repr__(self):
-        from PyBYOND.base_types.mappable.turf import Turf  #FIXME, tutaj przez circual import
+        from pymmo.base_types.mappable.turf import Turf  #FIXME, tutaj przez circual import
         return '{} ({}, {})'.format([
             atom for atom
             in self.cell

@@ -289,7 +289,7 @@ class PlainPolygonProgram2D(ShaderProgram):
 
         glLinkProgram(self.id)
         if glGetProgramiv(self.id, GL_LINK_STATUS) != GL_TRUE:
-            print("Unable to link program:")
+            print("3Unable to link program:")
             self.print_program_log(self.id)
             glDeleteShader(vertex_shader_id)
             glDeleteShader(fragment_shader_id)

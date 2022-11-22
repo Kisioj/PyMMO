@@ -3,24 +3,34 @@ import sys
 import time
 from collections import deque
 
-import pygame
+# import pygame
 from glm import ortho, mat4
-from pygame.constants import (
-    K_LEFT,
-    K_RIGHT,
-    K_UP,
-    K_DOWN,
-    QUIT,
-    KEYDOWN,
-    KEYUP,
-    K_ESCAPE,
-    K_KP2,
-    K_KP8,
-    K_KP4,
-    K_KP6,
-    DOUBLEBUF, OPENGL)
+# from pygame.constants import (
+#     K_LEFT,
+#     K_RIGHT,
+#     K_UP,
+#     K_DOWN,
+#     QUIT,
+#     KEYDOWN,
+#     KEYUP,
+#     K_ESCAPE,
+#     K_KP2,
+#     K_KP8,
+#     K_KP4,
+#     K_KP6,
+#     DOUBLEBUF, OPENGL)
 
-from PyBYOND import step
+from PySide6.QtCore import Qt
+K_LEFT = Qt.Key_Left
+K_RIGHT = Qt.Key_Right
+K_UP = Qt.Key_Up
+K_DOWN = Qt.Key_Down
+K_KP4 = Qt.Key_4
+K_KP6 = Qt.Key_6
+K_KP8 = Qt.Key_8
+K_KP2 = Qt.Key_2
+
+from pymmo import step
 from .base_types.mappable.movable.mob import Mob
 from .base_types import world_map
 from .base_types.client import Client
@@ -28,7 +38,7 @@ from .base_types.renderer import Renderer
 from .base_types.world import World
 from . import singletons as si
 
-# from PyBYOND import api
+# from pymmo import api
 from .verb import verbs
 
 
@@ -69,7 +79,7 @@ si.client = Client()
 si.renderer = Renderer()
 
 
-class PyBYOND(object):
+class pymmo:
     def update_viewport(self):
         view = si.world.view
         if isinstance(view, str):
@@ -89,8 +99,7 @@ class PyBYOND(object):
         si.world.screen_width = SCREEN_WIDTH  # TODO added
         si.world.screen_height = SCREEN_HEIGHT  # TODO added
 
-        # si.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
-        si.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), DOUBLEBUF | OPENGL)
+        # si.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), DOUBLEBUF | OPENGL)
 
 
     def run(self):
@@ -101,6 +110,8 @@ class PyBYOND(object):
         logging.info('verbs', verbs.items())
         world_map.WorldMap(si.world, 'map.ini')
 
+        print(f'{si.world=}')
+
         mob_class = si.world.mob or Mob
         player = mob_class()
         player.client = si.client
@@ -109,16 +120,12 @@ class PyBYOND(object):
 
         player.__login__()
 
-        pygame.init()
-        pygame.font.init()
-        fpsClock = pygame.time.Clock()
-        pygame.display.set_caption('PyBomberman')
-
         self.update_viewport()
 
         count = 0
         fps_counter = deque()
 
+        print(f'{si.renderer=}')
         si.renderer.initialize()
 
         while True:
@@ -156,7 +163,6 @@ class PyBYOND(object):
 
             player.handle_keyboard()
 
-            # si.screen.fill((1, 0, 0))
             si.renderer.clear_screen()
 
             si.world.map.__draw__(si.world, si.client)
@@ -168,21 +174,6 @@ class PyBYOND(object):
                     walk_params.ticks_left = walk_params.lag
                     step(movable, walk_params.direction)
 
-            # player.draw()
-            for event in pygame.event.get():
-                if event.type == KEYDOWN:
-                    si.client.__keydown__(event.key)
-                if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
-                    pygame.quit()
-                    sys.exit()
-                elif event.type == KEYDOWN:
-                    si.keyboard[event.key] = True
-                elif event.type == KEYUP:
-                    si.keyboard[event.key] = False
 
-            # pygame.display.update()  # TODO use when not using OpenGL
-            pygame.display.flip()  # TODO use with openGL
-            fpsClock.tick(FPS)
-
-pyBYOND = PyBYOND()
+pyBYOND = pymmo()
 

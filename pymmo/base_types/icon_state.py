@@ -1,7 +1,7 @@
 import logging
 import time
-from PyBYOND import constants
-from PyBYOND.base_types.icon_state_frame import IconStateFrame
+from pymmo import constants
+from pymmo.base_types.icon_state_frame import IconStateFrame
 
 
 class IconState:

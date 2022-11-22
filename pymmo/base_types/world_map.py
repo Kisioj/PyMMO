@@ -1,7 +1,7 @@
 import configparser
 
-from PyBYOND import constants
-from PyBYOND import singletons as si
+from pymmo import constants
+from pymmo import singletons as si
 from .location import Location
 
 
@@ -65,7 +65,8 @@ class WorldMap:
     def __init__(self, world, filename):
         world.map = self
         config = configparser.ConfigParser()
-        config.read(filename)
+        if not config.read(filename):
+            raise Exception(f"Cannot read config file '{filename}'")
         raw_map = config.get('level', 'map').split('\n')
         self.width, self.height = len(raw_map[0]), len(raw_map)
 

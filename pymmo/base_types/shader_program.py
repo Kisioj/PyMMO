@@ -5,7 +5,51 @@ from OpenGL.GL import GL_LINK_STATUS, GL_TRUE, glAttachShader, glCreateProgram, 
     glCompileShader, glGetShaderiv, glIsProgram, glGetProgramInfoLog, glIsShader, glGetShaderInfoLog, glCreateShader, \
     GL_COMPILE_STATUS, glUniform3i
 from glm import value_ptr, mat4
+import os
 
+
+VERTEX_SHADER = """
+# version 330
+layout(location = 0) in vec2 VertexPos2D;
+layout(location = 1) in vec2 VertTexCoord;
+
+uniform mat4 ProjectionMatrix;
+uniform mat4 ModelViewMatrix;
+
+out vec2 FragTexCoord;
+void main()
+{
+    gl_Position = ProjectionMatrix * ModelViewMatrix * vec4(VertexPos2D.x, VertexPos2D.y, 0.0, 1.0);
+    FragTexCoord = VertTexCoord;
+}
+"""
+
+FRAGMENT_SHADER = """
+# version 330
+in vec2 FragTexCoord;
+out vec4 glFragColor;
+
+uniform sampler2D TextureUnit;
+uniform ivec3 iPickColor;
+uniform int iPickMode;
+
+void main()
+{
+    if(iPickMode == 0){
+
+        glFragColor = texture(TextureUnit, FragTexCoord);
+        //glFragColor = vec4(0.5, 0.0, 0.0, 1.0);
+    }else{
+        vec4 tmpColor = texture(TextureUnit, FragTexCoord);
+        //if (tmpColor.a <= 0.0) discard;
+        float alpha = 1.0;
+        if (tmpColor.a <= 0.0) {
+            alpha = 0.0;
+        }
+        glFragColor = vec4(iPickColor.r/255.0, iPickColor.g/255.0, iPickColor.b/255.0, alpha);
+    }
+}
+"""
 
 class ShaderProgram:
     def __init__(self):
@@ -23,21 +67,24 @@ class ShaderProgram:
     def unbind(self):
         glUseProgram(0)
 
-
-    def load_shader_from_file(self, filepath, shader_type):
-        with open(filepath) as file:
-            shader_source = file.read()
-
+    def load_shader_from_text(self, shader_source, shader_type):
         shader_id = glCreateShader(shader_type)
         glShaderSource(shader_id, shader_source)
         glCompileShader(shader_id)
         if glGetShaderiv(shader_id, GL_COMPILE_STATUS) != GL_TRUE:
-            print(f"Unable to compile shader ({filepath}):")
+            print(f"Unable to compile shader:")
+            print(shader_source)
             self.print_shader_log(shader_id)
             glDeleteShader(shader_id)
             shader_id = 0
 
         return shader_id
+
+    def load_shader_from_file(self, filepath, shader_type):
+        with open(filepath) as file:
+            shader_source = file.read()
+
+        return self.load_shader_from_text(shader_source=shader_source, shader_type=shader_type)
 
     def print_program_log(self, program):
         if not glIsProgram(program):
@@ -75,15 +122,18 @@ class PickProgram(ShaderProgram):
 
     def load_program(self):
         self.id = glCreateProgram()
-        vertex_shader_id = self.load_shader_from_file("/home/kisioj/PycharmProjects/pybomberman/PyBYOND/base_types/basic.glvs", GL_VERTEX_SHADER)
+        print(f'{self.id=}')
+        # vertex_shader_id = self.load_shader_from_file(os.path.join(os.path.dirname(__file__), 'basic.glvs'), GL_VERTEX_SHADER)
+        vertex_shader_id = self.load_shader_from_text(VERTEX_SHADER, GL_VERTEX_SHADER)
         glAttachShader(self.id, vertex_shader_id)
 
-        fragment_shader_id = self.load_shader_from_file("/home/kisioj/PycharmProjects/pybomberman/PyBYOND/base_types/basic.glfs", GL_FRAGMENT_SHADER)
+        # fragment_shader_id = self.load_shader_from_file(os.path.join(os.path.dirname(__file__), 'basic.glfs'), GL_FRAGMENT_SHADER)
+        fragment_shader_id = self.load_shader_from_text(FRAGMENT_SHADER, GL_FRAGMENT_SHADER)
         glAttachShader(self.id, fragment_shader_id)
 
         glLinkProgram(self.id)
         if glGetProgramiv(self.id, GL_LINK_STATUS) != GL_TRUE:
-            print("Unable to link program:")
+            print("1Unable to link program:")
             self.print_program_log(self.id)
             glDeleteShader(vertex_shader_id)
             glDeleteShader(fragment_shader_id)
@@ -167,17 +217,17 @@ class WaterShaderProgram(ShaderProgram):
 
     def load_program(self):
         self.id = glCreateProgram()
-        # vertex_shader_id = self.load_shader_from_file("/home/kisioj/PycharmProjects/pybomberman/PyBYOND/base_types/basic.glvs", GL_VERTEX_SHADER)
-        vertex_shader_id = self.load_shader_from_file("/home/kisioj/PycharmProjects/pybomberman/PyBYOND/base_types/shadertoy.glvs", GL_VERTEX_SHADER)
+        # vertex_shader_id = self.load_shader_from_file("/home/kisioj/PycharmProjects/pybomberman/pymmo/base_types/basic.glvs", GL_VERTEX_SHADER)
+        vertex_shader_id = self.load_shader_from_file("/home/kisioj/PycharmProjects/pybomberman/pymmo/base_types/shadertoy.glvs", GL_VERTEX_SHADER)
         glAttachShader(self.id, vertex_shader_id)
 
-        # fragment_shader_id = self.load_shader_from_file("/home/kisioj/PycharmProjects/pybomberman/PyBYOND/base_types/basic.glfs", GL_FRAGMENT_SHADER)
-        fragment_shader_id = self.load_shader_from_file("/home/kisioj/PycharmProjects/pybomberman/PyBYOND/base_types/shadertoy.glfs", GL_FRAGMENT_SHADER)
+        # fragment_shader_id = self.load_shader_from_file("/home/kisioj/PycharmProjects/pybomberman/pymmo/base_types/basic.glfs", GL_FRAGMENT_SHADER)
+        fragment_shader_id = self.load_shader_from_file("/home/kisioj/PycharmProjects/pybomberman/pymmo/base_types/shadertoy.glfs", GL_FRAGMENT_SHADER)
         glAttachShader(self.id, fragment_shader_id)
 
         glLinkProgram(self.id)
         if glGetProgramiv(self.id, GL_LINK_STATUS) != GL_TRUE:
-            print("Unable to link program:")
+            print("2Unable to link program:")
             self.print_program_log(self.id)
             glDeleteShader(vertex_shader_id)
             glDeleteShader(fragment_shader_id)

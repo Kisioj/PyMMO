@@ -1,5 +1,5 @@
-from PyBYOND import singletons as si
-from PyBYOND import base_types
+from pymmo import singletons as si
+from pymmo import base_types
 
 
 class World:

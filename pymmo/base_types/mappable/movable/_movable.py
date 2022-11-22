@@ -1,24 +1,34 @@
 import logging
-from pygame.constants import (
-    K_LEFT,
-    K_RIGHT,
-    K_UP,
-    K_DOWN,
-    K_KP4,
-    K_KP6,
-    K_KP8,
-    K_KP2
-)
+# from pygame.constants import (
+#     K_LEFT,
+#     K_RIGHT,
+#     K_UP,
+#     K_DOWN,
+#     K_KP4,
+#     K_KP6,
+#     K_KP8,
+#     K_KP2
+# )
 
-from PyBYOND.base_types.atom import Atom
-from PyBYOND.constants import (
+from PySide6.QtCore import Qt
+K_LEFT = Qt.Key_Left
+K_RIGHT = Qt.Key_Right
+K_UP = Qt.Key_Up
+K_DOWN = Qt.Key_Down
+K_KP4 = Qt.Key_4
+K_KP6 = Qt.Key_6
+K_KP8 = Qt.Key_8
+K_KP2 = Qt.Key_2
+
+from pymmo.base_types.atom import Atom
+from pymmo.constants import (
     SOUTH,
     NORTH,
     WEST,
     EAST,
 )
-from PyBYOND import singletons as si
-from PyBYOND.api import (
+from pymmo import singletons as si
+from pymmo.api import (
     get_step,
 )
 

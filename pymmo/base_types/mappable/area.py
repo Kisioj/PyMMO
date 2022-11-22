@@ -1,5 +1,5 @@
-from PyBYOND.base_types.atom import Atom
-from PyBYOND.constants import AREA_LAYER
+from pymmo.base_types.atom import Atom
+from pymmo.constants import AREA_LAYER
 
 
 class Area(Atom):

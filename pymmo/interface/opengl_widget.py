@@ -1,5 +1,6 @@
 import logging
 import sys
+import types
 from collections import deque
 import time
 

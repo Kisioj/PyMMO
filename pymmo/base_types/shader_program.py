@@ -117,8 +117,9 @@ class PickProgram(ShaderProgram):
         self.tex_coord_location = 0
         self.tex_unit_location = 0
 
-        self.iPickColor = (0, 0, 0)
-        self.iPickMode = 0
+        self.iPickColor = None  # (0, 0, 0)
+        self.iPickMode = None   # 0
+        self.ENABLE_PICK_MODE = 0
 
     def load_program(self):
         self.id = glCreateProgram()

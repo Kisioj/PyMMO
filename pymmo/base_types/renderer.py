@@ -23,7 +23,6 @@ class Renderer:
         self.program = PickProgram()
 
     def initialize(self):
-
         # # Initialize Projection Matrix
         # glMatrixMode(GL_PROJECTION)
         # glLoadIdentity()
@@ -81,8 +80,9 @@ class Renderer:
         self.program.model_view_matrix = translate(vec3(x, y, 0))
         self.program.update_model_view_matrix()
 
-        # self.program.set_iPickColor(*atom.color)
-        # self.program.set_iPickMode(1)
+        if self.program.ENABLE_PICK_MODE:
+            self.program.set_iPickColor(*atom.color)
+            self.program.set_iPickMode(1)
 
         if self.texture_id != icon.id:
             self.texture_id = icon.id
